@@ -1,9 +1,10 @@
 // requires
 const fs = require('fs')
 const rl = require('readline')
+const path = require('path')
 
 // file specific variables
-const file = './data_weather.dat'
+const file = path.join(__dirname, 'data_weather.dat')
 const keyDay = 'Dy'
 const keyTempMin = 'MnT'
 const keyTempMax = 'MxT'
@@ -46,12 +47,17 @@ function generateLineColumns(line){
   for(let i=0; i < headerColumns.length; i++){
     let data = headerColumns[i]
     let endPos = (line.length - 1)
-    if(data != undefined
-      && typeof data.key == 'string'
-      && !isNaN(data.start)
-      && !isNaN(data.end)
-      && data.start < endPos
-      && data.end < endPos){
+    const dataValid = (
+      data != undefined &&
+      typeof data.key == 'string' &&
+      data.key.length > 0 &&
+      !isNaN(data.start) &&
+      !isNaN(data.end) &&
+      endPos > -1 &&
+      data.start < endPos &&
+      data.end < endPos
+    )
+    if(dataValid){
         try{
           columns[data.key] = line.substring(data.start, data.end).trim()
         }catch(err){}
@@ -122,7 +128,7 @@ function parseFile(){
       if(data != undefined){
         invalidData = false
         // log lowest temperature variance
-        const logString = 'Day '+ data[keyDay] + " has the lowest temperature variance of " + data.tempSpread
+        const logString = 'Day '+ data[keyDay] + ' has the lowest temperature variance of ' + data.tempSpread
         console.log(logString)
       }
     }

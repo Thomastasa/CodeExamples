@@ -1,9 +1,10 @@
 // requires
 const fs = require('fs')
 const rl = require('readline')
+const path = require('path')
 
 // file specific variables
-const file = './data_soccer.dat'
+const file = path.join(__dirname, 'data_soccer.dat')
 const keyTeam = 'Team'
 const keyGoalsFor = 'F'
 const keyGoalsAgainst = 'A'
@@ -21,7 +22,7 @@ function generateHeaderColumns(line){
   const columns = [{
     key: keyTeam,
     start:  line.indexOf(keyTeam),
-    end: (line.indexOf(keyP) - 1),
+    end: (line.indexOf(keyP) - 1)
   },{
     key: keyGoalsFor,
     start: line.indexOf(keyGoalsFor),
@@ -40,12 +41,17 @@ function generateLineColumns(line){
   for(let i=0; i < headerColumns.length; i++){
     let data = headerColumns[i]
     let endPos = (line.length - 1)
-    if(data != undefined
-      && typeof data.key == 'string'
-      && !isNaN(data.start)
-      && !isNaN(data.end)
-      && data.start < endPos
-      && data.end < endPos){
+    const dataValid = (
+      data != undefined &&
+      typeof data.key == 'string' &&
+      data.key.length > 0 &&
+      !isNaN(data.start) &&
+      !isNaN(data.end) &&
+      endPos > -1 &&
+      data.start < endPos &&
+      data.end < endPos
+    )
+    if(dataValid){
         try{
           columns[data.key] = line.substring(data.start, data.end).replace(regexDash,'').trim()
         }catch(err){}
@@ -118,7 +124,7 @@ function parseFile(){
       if(data != undefined){
         invalidData = false
         // log lowest score difference
-        const logString = 'Team '+ data[keyTeam].replace(regexUnderscore,' ') + " has the lowest score difference of " + data.scoreDiff
+        const logString = 'Team '+ data[keyTeam].replace(regexUnderscore,' ') + ' has the lowest score difference of ' + data.scoreDiff
         console.log(logString)
       }
     }
