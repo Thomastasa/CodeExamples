@@ -12,7 +12,7 @@ The script then goes line by line though the text file and splits the columns up
 
 ## weather.js
 
-This script is designed to look though a dat file ```data_weather.dat``` and evaluate which day has the the lowest temperature variance.  This was my first attempt and it sorts every header parameter.
+This script is designed to look through a dat file ```data_weather.dat``` and evaluate which day has the the lowest temperature variance.  This was my first attempt and it sorts every header parameter.
 
 Run script in a terminal with Node.js:
 
@@ -25,7 +25,7 @@ Outputs:
 
 ## soccer.js
 
-This script is designed to look though a dat file ```data_soccer.dat``` and evaluate which team had the difference in goals scored for the team versus goals scored against the team. This was my second attempt, and i changed a few things. Foremost, it only sorts the required parameters.
+This script is designed to look through a dat file ```data_soccer.dat``` and evaluate which team had the difference in goals scored for the team versus goals scored against the team. This was my second attempt, and i changed a few things. Foremost, it only sorts the required parameters.
 
 Run script in a terminal with Node.js:
 
